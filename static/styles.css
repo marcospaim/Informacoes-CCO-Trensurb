@@ -1,0 +1,45 @@
+/* ESTILIZAÇÃO DA PÁGINA APRESENTADA NO SAGUÃO DO ADMINISTRATIVO (RESOLUÇÃO 1920X1080 */
+body {
+    background: #404040;
+    color: white;
+    margin: 0;
+  }
+  .box {
+    display: flex;
+    flex-direction: row;
+    height:50vh;
+  }
+  .box-squares {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    font-size: 5vh;
+    margin: 0.09vw;
+    background: black;
+    border-radius: 0.5vw;
+  }
+  .box-weather {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    width:100%;
+  }
+  .weather-info {
+    width: 50%; 
+    text-align:center
+  }
+  .grey-text{
+    margin-left: auto; 
+    font-size: 1.5vw; 
+    padding-right: 1.5vw;
+    color: grey
+  }
+  #hor{
+    font-size: 18vh;
+  }
+  #imagem-status{
+    height: 95%;
+  }
