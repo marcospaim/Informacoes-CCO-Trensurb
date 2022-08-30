@@ -3,29 +3,29 @@
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5"><!--Atualiza a página a cada 5 segundos-->
+    <!--<meta http-equiv="refresh" content="900"> -->
     <title>informações</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body> 
     <div class="box">
-        <div class="box-squares"><img id="imagem-status" src="{{url_for('static',filename=imagem)}}"></div>
+        <div class="box-squares"><img id="imagem-status" src=""></div>
         <div class="box-squares">
             <div>PORTO ALEGRE</div>
             <div class = "box-weather">
                 <div class="weather-info">
-                        <div style="font-size: 9vw;">{{ info_POA.temp}} ºC</div>
+                        <div id="POA-temp" style="font-size: 9vw;">ºC</div>
                 </div>
                 <div class="weather-info">
-                    <img style="width: 70%" src={{ info_POA.icon}}>
+                    <img id="POA-img" style="width: 70%" src=''>
                 </div>
             </div>
             <div class = "box-weather">
-                <div class="weather-info">Ventos: {{ info_POA.speed}} km/h</div>
-                <div class="weather-info">Umidade: {{ info_POA.humidity}}%</div>
+                <div id="POA-wind" class="weather-info">Ventos</div>
+                <div id="POA-humidity"class="weather-info">Umidade</div>
             </div>
             <div class = "box-weather">
-                <div class="grey-text">Atualizado às {{ info_POA.time }}</div>
+                <div id="POA-atualizado" class="grey-text">Atualizado às </div>
             </div>
         </div>
     </div>
@@ -38,18 +38,18 @@
             <div>NOVO HAMBURGO</div>
             <div class = "box-weather">
                 <div class="weather-info">
-                        <div style="font-size: 9vw;">{{ info_NH.temp}} ºC</div>
+                        <div id="NH-temp" style="font-size: 9vw;">ºC</div>
                 </div>
                 <div class="weather-info">
-                    <img style="width: 70%" src={{ info_NH.icon}}>
+                    <img id="NH-img" style="width: 70%" src="">
                 </div>
             </div>
             <div class = "box-weather">
-                <div class="weather-info">Ventos: {{ info_NH.speed}} km/h</div>
-                <div class="weather-info">Umidade: {{ info_NH.humidity}}%</div>
+                <div id="NH-wind" class="weather-info">Ventos</div>
+                <div id="NH-humidity" class="weather-info">Umidade</div>
             </div>
             <div class = "box-weather">
-                <div class="grey-text">Atualizado às {{ info_NH.time }}</div>
+                <div id="NH-atualizado" class="grey-text">Atualizado às</div>
             </div>
         </div>
     </div>

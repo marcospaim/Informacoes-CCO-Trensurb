@@ -1,4 +1,8 @@
-// função "principal", pega horário atual, e atualiza dentro da página HTML. Depois do tempo estipulado de 6 segundos (no setTimeout valor 6000 milisegundos), vai para a função mudar().
+key = "fec14164a7fd30f21f10fda830ea35dd"
+IntervaloOpenweather = 9000000
+
+setInterval(carregar, 1000);
+
 function carregar() {
   document.body.style.cursor="none"
   var today = new Date()
@@ -33,11 +37,111 @@ function carregar() {
 
   var hor = document.getElementById("hor").innerText=`${hours}:${min}:${sec}`
   var d_date = document.getElementById("calendario").innerText=`${day}/${month}/${today.getFullYear()} - ${semana[dia_semana]}`
-
-  setTimeout(function() {
-      carregar();
-  }, 1000);
-  setTimeout(mudar, 8000)
 }
 
 carregar()
+
+function buscarStatusOperacao()
+{
+    fetch(`http://127.0.0.1:5000/status`)
+                    .then((res) => {
+                        if (res.status !== 200) {
+                            console.log(res.status);
+                            return
+                        }
+                        res.json().then((data) => {
+                                console.log(data)
+                                document.getElementById("imagem-status").src= `static/${data.imagem}`
+                                //trataStatusOperacao(data)
+                            })
+                            .catch((err) => console.log(err))
+                    })
+}
+
+function trataStatusOperacao(data) {
+    var status = data["status-situacao-operacional"];
+    switch (status) {
+		case 1:
+            document.getElementById("imagem-status").src= "static/SISOP-Normal.bmp"
+        case 3:
+            document.getElementById("imagem-status").src= "static/SISOP-Interrompida.bmp"
+        default:
+            document.getElementById("imagem-status").src= "static/SISOP-Alteracao.bmp"
+    }
+}
+buscarStatusOperacao()
+setInterval(buscarStatusOperacao, 60000);
+
+function buscarTempoPOA()
+{
+    fetch(`http://127.0.0.1:5000/infoPOA`)
+                    .then((res) => {
+                        if (res.status !== 200) {
+                            console.log(res.status);
+                            return
+                        }
+                        res.json().then((data) => {
+                                console.log(data)
+                                weather_info_POA(data)
+                            })
+                            .catch((err) => console.log(err))
+                    })
+}
+function buscarTempoNH()
+{
+    fetch(`http://127.0.0.1:5000/infoNH`)
+                    .then((res) => {
+                        if (res.status !== 200) {
+                            console.log(res.status);
+                            return
+                        }
+                        res.json().then((data) => {
+                                console.log(data)
+                                weather_info_NH(data)
+                            })
+                            .catch((err) => console.log(err))
+                    })
+}
+
+function weather_info_POA(data){
+    var today = new Date()
+    var hours = today.getHours()
+    var min = today.getMinutes()
+    var sec = today.getSeconds()
+    if (hours<10)
+      hours=`0${hours}`
+    if (min<10)
+        min=`0${min}`
+    if (sec<10)
+        sec=`0${sec}`
+
+    document.getElementById("POA-temp").innerText= `${data.temp} º`
+    document.getElementById("POA-wind").innerText= `Ventos: ${data.speed} km/h`
+    document.getElementById("POA-humidity").innerText= `Umidade: ${data.humidity}%`
+    document.getElementById("POA-img").src= `${data.icon}`
+    document.getElementById("POA-atualizado").innerText= `Atualizado às ${data.time}`
+}
+
+function weather_info_NH(data){
+    var today = new Date()
+    var hours = today.getHours()
+    var min = today.getMinutes()
+    var sec = today.getSeconds()
+    if (hours<10)
+      hours=`0${hours}`
+    if (min<10)
+        min=`0${min}`
+    if (sec<10)
+        sec=`0${sec}`
+
+    document.getElementById("NH-temp").innerText= `${data.temp} º`
+    document.getElementById("NH-wind").innerText= `Ventos: ${data.speed} km/h`
+    document.getElementById("NH-humidity").innerText= `Umidade: ${data.humidity}%`
+    document.getElementById("NH-img").src= `${data.icon}`
+    document.getElementById("NH-atualizado").innerText= `Atualizado às ${data.time}`
+}
+
+buscarTempoPOA()
+setInterval(buscarTempoPOA, IntervaloOpenweather);
+buscarTempoNH()
+setInterval(buscarTempoNH, IntervaloOpenweather);

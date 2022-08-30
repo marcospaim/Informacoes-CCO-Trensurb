@@ -4,9 +4,11 @@ import requests
 from threading import Timer
 
 OPEN_WEATHER_KEY = 'fec14164a7fd30f21f10fda830ea35dd'
-TEMPO_WEATHER = 600
+TEMPO_WEATHER = 900
+TEMPO_STATUS = 60
 info_POA = {}
 info_NH = {}
+status_op = {}
 
 app = Flask(__name__)
 
@@ -45,22 +47,39 @@ def timeout():
                 print("Nao foi possivel conectar-se com o openweather")
 timeout()
 
+def newTimer_status():
+        t=Timer(TEMPO_STATUS, ler_status)
+        t.start()
 
 def ler_status():
-    try:
-        response = requests.get("https://www.trensurb.gov.br/paginas/operacoes.php", verify=False).json()
-        if(response['status-situacao-operacional'] == 1): #operação normal
-            return "SISOP-Normal.bmp"
-        elif(response['status-situacao-operacional'] == 3): #paralização total 
-            return "SISOP-Interrompida.bmp"
-        else: #operação com alteração
-            return "SISOP-Alteracao.bmp"
-    except:
-        print("Nao foi possivel conectar-se")
-        return None
+    with app.app_context():
+        newTimer_status()
+        try:
+            response = requests.get("https://www.trensurb.gov.br/paginas/operacoes.php", verify=False).json()
+            if(response['status-situacao-operacional'] == 1): #operação normal
+                status_op["imagem"] = "SISOP-Normal.bmp"
+            elif(response['status-situacao-operacional'] == 3): #paralização total 
+                status_op["imagem"] = "SISOP-Interrompida.bmp"
+            else: #operação com alteração
+                status_op["imagem"] = "SISOP-Alteracao.bmp"
+        except:
+            print("Nao foi possivel conectar-se")
+
+ler_status()
+
 
 @app.route("/")
 def hello_world():
-    imagem = ler_status() 
-    return render_template("page.html", imagem = imagem, info_POA = info_POA, info_NH = info_NH)
+    return render_template("page.html")
     
+@app.route("/status")
+def status():
+    return status_op, 200
+
+@app.route("/infoPOA")
+def infoPOA():
+    return info_POA, 200
+
+@app.route("/infoNH")
+def infoNH():
+    return info_NH, 200
