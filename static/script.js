@@ -4,7 +4,7 @@ IntervaloOpenweather = 9000000
 setInterval(carregar, 1000);
 
 function carregar() {
-  document.body.style.cursor="none"
+  //document.body.style.cursor="none"
   var today = new Date()
   var month = today.getMonth()+1
   var day = today.getDate()
