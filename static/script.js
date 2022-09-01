@@ -1,5 +1,6 @@
 key = "fec14164a7fd30f21f10fda830ea35dd"
 IntervaloOpenweather = 9000000
+server_URL = "http://127.0.0.1:5245"
 
 setInterval(carregar, 1000);
 
@@ -43,7 +44,7 @@ carregar()
 
 function buscarStatusOperacao()
 {
-    fetch(`http://127.0.0.1:5000/status`)
+    fetch(`${server_URL}/status`)
                     .then((res) => {
                         if (res.status !== 200) {
                             console.log(res.status);
@@ -74,7 +75,7 @@ setInterval(buscarStatusOperacao, 60000);
 
 function buscarTempoPOA()
 {
-    fetch(`http://127.0.0.1:5000/infoPOA`)
+    fetch(`${server_URL}/infoPOA`)
                     .then((res) => {
                         if (res.status !== 200) {
                             console.log(res.status);
@@ -89,7 +90,7 @@ function buscarTempoPOA()
 }
 function buscarTempoNH()
 {
-    fetch(`http://127.0.0.1:5000/infoNH`)
+    fetch(`${server_URL}/infoNH`)
                     .then((res) => {
                         if (res.status !== 200) {
                             console.log(res.status);

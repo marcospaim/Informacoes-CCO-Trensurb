@@ -83,3 +83,6 @@ def infoPOA():
 @app.route("/infoNH")
 def infoNH():
     return info_NH, 200
+
+if __name__ == '__main__':
+    app.run(port=5245, debug=True)
