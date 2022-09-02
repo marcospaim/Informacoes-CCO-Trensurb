@@ -1,11 +1,18 @@
 from flask import Flask, render_template
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
 from threading import Timer
+from configuracoes import get_config
 
-OPEN_WEATHER_KEY = 'fec14164a7fd30f21f10fda830ea35dd'
+
 TEMPO_WEATHER = 900
 TEMPO_STATUS = 60
+
+#OPEN_WEATHER_KEY = 'fec14164a7fd30f21f10fda830ea35dd'
+#PORT=5245
+#HOST='127.0.0.1'
+openWeatherKey, port, host = get_config()
+
 info_POA = {}
 info_NH = {}
 status_op = {}
@@ -18,11 +25,12 @@ def kelvinToCelsius(kelvin):
 def newTimer():
         t=Timer(TEMPO_WEATHER, timeout)
         t.start()
+
 def timeout():
         with app.app_context():
             newTimer()
             try:
-                response_POA = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.994722&lon=-51.171111&lang=pt_br&appid={OPEN_WEATHER_KEY}", verify=False)
+                response_POA = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.994722&lon=-51.171111&lang=pt_br&appid={openWeatherKey}", verify=False)
                 response_POA = response_POA.json()
 
                 info_POA["icon"] = f"http://openweathermap.org/img/wn/{response_POA['weather'][0]['icon']}@2x.png"
@@ -34,7 +42,7 @@ def timeout():
                 current_time = now.strftime("%H:%M:%S")
                 info_POA["time"] = current_time
 
-                response_NH = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.684008529046007&lon=-51.1333604178655&lang=pt_br&appid={OPEN_WEATHER_KEY}", verify=False)
+                response_NH = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.684008529046007&lon=-51.1333604178655&lang=pt_br&appid={openWeatherKey}", verify=False)
                 response_NH = response_NH.json()
 
                 info_NH["icon"] = f"http://openweathermap.org/img/wn/{response_NH['weather'][0]['icon']}@2x.png"
@@ -45,6 +53,7 @@ def timeout():
 
             except:
                 print("Nao foi possivel conectar-se com o openweather")
+
 timeout()
 
 def newTimer_status():
@@ -67,7 +76,6 @@ def ler_status():
 
 ler_status()
 
-
 @app.route("/")
 def hello_world():
     return render_template("page.html")
@@ -85,4 +93,4 @@ def infoNH():
     return info_NH, 200
 
 if __name__ == '__main__':
-    app.run(port=5245, debug=True)
+    app.run(host=host, port=port, debug=False, threaded=True)
