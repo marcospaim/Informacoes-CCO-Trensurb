@@ -33,7 +33,7 @@ def timeout():
                 response_POA = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.994722&lon=-51.171111&lang=pt_br&appid={openWeatherKey}", verify=False)
                 response_POA = response_POA.json()
 
-                info_POA["icon"] = f"http://openweathermap.org/img/wn/{response_POA['weather'][0]['icon']}@2x.png"
+                info_POA["icon"] = f"static/{response_POA['weather'][0]['icon']}@2x.png"
                 info_POA["speed"] = round(3.6*response_POA['wind']['speed'], 1) # converter de m/s para km/h e arredondar para 1 casa decimal
                 info_POA["temp"] = kelvinToCelsius(response_POA['main']['temp'])
                 info_POA["humidity"] = response_POA['main']['humidity']
@@ -45,7 +45,7 @@ def timeout():
                 response_NH = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat=-29.684008529046007&lon=-51.1333604178655&lang=pt_br&appid={openWeatherKey}", verify=False)
                 response_NH = response_NH.json()
 
-                info_NH["icon"] = f"http://openweathermap.org/img/wn/{response_NH['weather'][0]['icon']}@2x.png"
+                info_NH["icon"] = f"static/{response_NH['weather'][0]['icon']}@2x.png"
                 info_NH["speed"] = round(3.6*response_NH['wind']['speed'], 1)
                 info_NH["temp"] = kelvinToCelsius(response_NH['main']['temp'])
                 info_NH["humidity"] = response_NH['main']['humidity']
