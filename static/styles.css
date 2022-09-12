@@ -38,9 +38,9 @@ body {
   color: grey
 }
 #hor{
-  font-size: 18vh;
+  font-size: 17vh;
 }
 #imagem-status{
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 95%;
+  max-height: 95%;
 }
