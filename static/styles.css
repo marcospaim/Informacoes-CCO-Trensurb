@@ -42,5 +42,7 @@ body {
 }
 #imagem-status{
   max-width: 95%;
-  max-height: 95%;
+  height: 95%;
+  width: auto;
+  object-fit: contain;
 }
