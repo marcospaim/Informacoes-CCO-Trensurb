@@ -1,5 +1,5 @@
 
-IntervaloOpenweather = 840000
+IntervaloOpenweather = 300000
 
 setInterval(carregar, 1000);
 
