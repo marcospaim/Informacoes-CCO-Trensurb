@@ -1,7 +1,9 @@
 import csv
 import os
 def get_config():
-    directory = os.path.dirname(__file__)
+    path = os.path.dirname(__file__)
+    directory = os.path.abspath(os.path.join(os.path.abspath(os.path.join(path, os.pardir)), os.pardir))
+    #directory = path
     directory = directory+'/Configurações.csv'
     with open(directory, 'r', newline='') as f:
         reader = csv.reader(f)

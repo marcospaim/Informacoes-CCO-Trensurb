@@ -53,5 +53,8 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {%if raspi %}
+        <script src="{{ url_for('static', filename='script-raspi.js') }}"></script>
+    {% endif%}
 </body>
 </html>

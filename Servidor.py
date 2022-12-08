@@ -7,6 +7,12 @@ from gevent.pywsgi import WSGIServer
 #from yourapplication import app
 from app import app
 import configuracoes
+import os 
+
+abs_path = os.path.abspath('.')
+#print(abs_path)
+app.template_folder = abs_path + '/templates'
+app.static_folder = abs_path + '/static'
 
 openWeatherKey, PORTA, IP_HOST = configuracoes.get_config()
 PORTA = int(PORTA)

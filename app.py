@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
 from datetime import datetime
 import requests
 from threading import Timer
@@ -78,7 +78,11 @@ ler_status()
 
 @app.route("/")
 def hello_world():
-    return render_template("page.html")
+    return render_template("page.html", raspi=False)
+
+@app.route("/raspi")
+def raspi():
+    return render_template("page.html", raspi=True)
     
 @app.route("/status")
 def status():
@@ -91,6 +95,13 @@ def infoPOA():
 @app.route("/infoNH")
 def infoNH():
     return info_NH, 200
+
+# Função usada para clientes testarem conexão com servidor (ver  o JS das páginas HTML)
+@app.route('/pingpong')
+def pingpong():
+    response = make_response("PingPong Funcionando")
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run(host=host, port=port, debug=False, threaded=True)
